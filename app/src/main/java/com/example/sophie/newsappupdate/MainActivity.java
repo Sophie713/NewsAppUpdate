@@ -3,6 +3,7 @@ package com.example.sophie.newsappupdate;
 import android.Manifest;
 import android.app.LoaderManager;
 import android.content.Context;
+import android.content.Intent;
 import android.content.Loader;
 import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
@@ -14,12 +15,16 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
 import com.example.sophie.newsappupdate.data.NewsObject;
+import com.example.sophie.newsappupdate.data.SettingsActivity;
 import com.example.sophie.newsappupdate.utils.JSONLoader;
 import com.example.sophie.newsappupdate.utils.JSONParser;
 import com.example.sophie.newsappupdate.utils.NewsAdapter;
@@ -32,6 +37,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     Button update_button;
     NewsAdapter adapter;
     TextView noDataToShow;
+    android.support.v7.widget.Toolbar settings;
 
     //check if device is connected
     private boolean isNetworkAvailable() {
@@ -55,6 +61,9 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         //find my views
         update_button = findViewById(R.id.update_button);
         noDataToShow = findViewById(R.id.no_data_message);
+        settings = findViewById(R.id.toolbarMain);
+        settings.setTitle("");
+        setSupportActionBar(settings);
         //check permissions
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.INTERNET) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.INTERNET}, 1);
@@ -109,5 +118,23 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     }
 
+     //menu setup
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.settings, menu);
+        return true;
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.settings) {
+            Intent intent = new Intent(this, SettingsActivity.class);
+            startActivity(intent);
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
 }
+

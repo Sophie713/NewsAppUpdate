@@ -8,4 +8,5 @@
     <string name="no_connection">You need an internet connection to view the articles. Please connect to the internet and use the update button.</string>
     <string name="error_message">There has been an error. Please, check your internet connection and try the update button.</string>
     <string name="success">Success</string>
+    <string name="settings">Settings</string>
 </resources>

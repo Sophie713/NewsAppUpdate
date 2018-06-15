@@ -6,6 +6,7 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:actionMenuTextAppearance">@style/SettingsMenuStyle</item>
     </style>
 
     <style name="TitleTop">
@@ -39,6 +40,12 @@
         <item name="android:gravity">center</item>
         <item name="android:textColor">@color/colorPrimary</item>
         <item name="android:layout_margin">2dp</item>
+    </style>
+
+    <style name="SettingsMenuStyle">
+        <item name="android:background">@color/colorPrimaryDark</item>
+        <item name="android:fontFamily">@font/source_sans_semibold</item>
+        <item name="android:textSize">20sp</item>
     </style>
 
 </resources>
