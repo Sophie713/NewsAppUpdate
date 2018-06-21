@@ -1,18 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<fragment xmlns:android="http://schemas.android.com/apk/res/android"
+    android:name="com.example.sophie.newsappupdate.data.SettingsActivity$SettingsPreferenceFragment"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".data.SettingsActivity">
-
-    <ImageView
-        android:id="@+id/backArrowSettings"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/back_arrow"
-        android:padding="8dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
-
-</android.support.constraint.ConstraintLayout>
+    tools:context="com.example.sophie.newsappupdate.data.SettingsActivity"></fragment>

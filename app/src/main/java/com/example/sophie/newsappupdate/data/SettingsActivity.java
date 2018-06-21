@@ -1,7 +1,9 @@
 package com.example.sophie.newsappupdate.data;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.preference.PreferenceFragment;
+import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -25,5 +27,13 @@ public class SettingsActivity extends AppCompatActivity {
                 onBackPressed();
             }
         });
+    }
+
+    public static class SettingsPreferenceFragment extends PreferenceFragment {
+        @Override
+        public void onCreate(@Nullable Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            addPreferencesFromResource(R.xml.preferences);
+        }
     }
 }
