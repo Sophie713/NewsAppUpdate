@@ -5,10 +5,12 @@ import android.app.LoaderManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.Loader;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -21,7 +23,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.Toolbar;
 
 import com.example.sophie.newsappupdate.data.NewsObject;
 import com.example.sophie.newsappupdate.data.SettingsActivity;
@@ -36,8 +37,11 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     JSONParser myParser = new JSONParser();
     Button update_button;
     NewsAdapter adapter;
+    String url;
+    String apiKey = "api-key=bad443d6-1a63-4406-a808-a72782dc4330";
     TextView noDataToShow;
     android.support.v7.widget.Toolbar settings;
+
 
     //check if device is connected
     private boolean isNetworkAvailable() {
@@ -64,6 +68,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         settings = findViewById(R.id.toolbarMain);
         settings.setTitle("");
         setSupportActionBar(settings);
+        getUrl();
         //check permissions
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.INTERNET) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.INTERNET}, 1);
@@ -83,6 +88,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             }
         });
 
+
     }
 
     private void loadData() {
@@ -93,14 +99,14 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     @Override
     public Loader<List<NewsObject>> onCreateLoader(int id, Bundle args) {
-        JSONLoader loader = new JSONLoader(this, getString(R.string.url));
+        JSONLoader loader = new JSONLoader(this, url);
         return loader;
     }
 
     @Override
     public void onLoadFinished(@NonNull Loader<List<NewsObject>> loader, List<NewsObject> data) {
-        if (!myParser.testHistory.isEmpty()) {
-            adapter = new NewsAdapter(myParser.testHistory);
+        if (!JSONParser.testHistory.isEmpty()) {
+            adapter = new NewsAdapter(JSONParser.testHistory);
             noDataToShow.setVisibility(View.GONE);
 
             RecyclerView myListView = findViewById(R.id.list);
@@ -135,6 +141,28 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void getUrl() {
+        //get url
+        url = "https://content.guardianapis.com/search?" + apiKey;
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        String section = sharedPreferences.getString("section", "none");
+        String order = sharedPreferences.getString("order", "none");
+        if (!section.equals("none") && !order.equals("none")) {
+            url = "https://content.guardianapis.com/search?section=" + section + "&order-by=" + order + "&" + apiKey;
+        } else if (!section.equals("none")) {
+            url = "https://content.guardianapis.com/search?section=" + section + "&" + apiKey;
+        } else if (!order.equals("none")) {
+            url = "https://content.guardianapis.com/search?order-by=" + order + "&" + apiKey;
+        }
+    }
+
+    @Override
+    protected void onPostResume() {
+        getUrl();
+        loadData();
+        super.onPostResume();
     }
 }
 

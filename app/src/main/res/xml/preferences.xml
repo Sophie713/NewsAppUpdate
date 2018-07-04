@@ -1,12 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     android:title="Search filter">
+    <PreferenceCategory android:title="News Preferences">
 
-    <EditTextPreference
-        android:defaultValue=" "
-        android:inputType="numberDecimal"
-        android:key="Search filter"
-        android:selectAllOnFocus="true"
-        android:title="Search filter" />
+        <ListPreference
+            android:entries="@array/section"
+            android:entryValues="@array/section"
+            android:key="section"
+            android:summary=""
+            android:title="Sections" />
 
+        <ListPreference
+            android:entries="@array/orderBy"
+            android:entryValues="@array/orderBy"
+            android:key="order"
+            android:summary="relevance"
+            android:title="Order by" />
+    </PreferenceCategory>
 </PreferenceScreen>
